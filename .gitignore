@@ -3,6 +3,7 @@ results/*
 logs/*
 .snakemake/*
 resources/*
+config/pep/documents.csv
 
 renameForTest_results/*
 renameForTest_logs/*
