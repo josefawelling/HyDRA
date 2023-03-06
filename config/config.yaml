@@ -9,3 +9,6 @@ pepfile: config/pep/config.yaml
 summary_ont_run1: "data/ont/run1/sequencing_summary.txt"
 #"/projects/seqlab/GridIONs/20211115_SM0006_JW0002_CefRes_strains_20211115/SM0006_JW0002_CefRes_strains_20211115/20211115_1648_X1_FAP91415_d0c3f758/sequencing_summary_FAP91415_f2d1671c.txt"
 summary_ont_run2: "data/ont/run2/sequencing_summary.txt"
+
+## list ordered by goodness/preference of the databases
+abricate_dbs: ["card", "ncbi", "resfinder", "argannot", "megares", "ecoli_vf", "plasmidfinder", "ecoh", "vfdb"]

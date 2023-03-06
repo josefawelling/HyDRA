@@ -92,17 +92,3 @@ rule checkm_uni:
         "../envs/checkm.yaml"
     shell:
         "checkm lineage_wf -x fasta {params.indir}/ {params.outdir}/ 2> {log}"
-
-'''
-rule busco:
-    input:
-        "results/assembly/{strain}/assembly.fasta"
-    output:
-        dir("results/reports/assembly/{strain}/busco/")
-    params:
-        outfolder_name = "{strain}_busco"
-    #logfile is produced in log subfolder -> need to mv it
-    shell:
-        "busco -i {input} -o {params.outdir} -m genome --auto-lineage-prok "
-        "&& mv {params.outfolder_name}/* {output}/*"
-'''

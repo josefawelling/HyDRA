@@ -30,17 +30,26 @@ rule abricate:
     output:
         all = "results/analysis/abricate/{strain}/{strain}_all.csv",
         info = "results/analysis/abricate/{strain}/{strain}_info.txt"
-        #ncbi = "results/analysis/abricate/{strain}/{strain}_ncbi.tab",
-        #summary = "results/analysis/abricate/{strain}/{strain}_summary.txt"
-    params:
-        outdir = lambda wildcards, output: Path(output.all).parent
     log:
-        "logs/abricate/{strain}.log"
+        "logs/abricate/{strain}_run.log"
     conda:
         "../envs/abricate.yaml"
     script:
-        "../scripts/abricate_all.py"
+        "../scripts/abricate_run.py"
         
+rule abricate_filter:
+    input:
+        "results/analysis/abricate/{strain}/{strain}_all.csv"
+    output:
+        args = "results/analysis/abricate/{strain}/{strain}_ARGs.csv",
+        filtout = "results/analysis/abricate/{strain}/{strain}_filtoutARGs.csv"
+    log:
+        "logs/abricate/{strain}_filter.log"
+    conda:
+        "../envs/abricate.yaml"
+    script:
+        "../scripts/abricate_filter.py"
+
 ## visualize the annotated genome
 rule gview:
     input:

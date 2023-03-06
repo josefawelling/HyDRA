@@ -16,7 +16,8 @@ include: "rules/analysis.smk"
 
 rule all:
     input:
-        expand("results/reports/{stage}_coverages.csv", stage=get_all_stages())#,
+        #expand("results/reports/{stage}_coverages.csv", stage=get_all_stages())#,
+        expand("results/analysis/abricate/{strain}/{strain}_ARGs.csv", strain=get_all_strain_ids())
         #"results/reports/assembly/120/quast/report.tsv",
         #"results/reports/assembly/120/checkm/lineage.ms"
 
