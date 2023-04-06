@@ -68,8 +68,8 @@ config = snakemake.config
 
 strain = snakemake.wildcards.strain[0]
 assembly = snakemake.input[0] #"results/final_assemblies/115_copy/assembly.fasta" #str(snakemake.input)
-all_path = snakemake.output.all[0] #"{}/{}_all.csv".format(outdir, strain)
-info_out_path = snakemake.output.info[0] #"{}/{}_info.txt".format(outdir, strain)
+all_path = snakemake.output.all #"{}/{}_all.csv".format(outdir, strain)
+info_out_path = snakemake.output.info #"{}/{}_info.txt".format(outdir, strain)
 
 #dbs = ["card", "ncbi", "resfinder", "argannot", "megares", "ecoli_vf", "plasmidfinder", "ecoh", "vfdb"]
 dbs = config['abricate_dbs']

@@ -13,7 +13,8 @@ rule prokka:
         "results/assembly/{strain}/{strain}_assembly.fasta"
         #"results/assembly/{strain}_contig.fasta"
     output:
-        gff = "results/analysis/prokka/{strain}/{strain}.gff"
+        gff = "results/analysis/prokka/{strain}/{strain}.gff",
+        gbk = "results/analysis/prokka/{strain}/{strain}.gbk"
     params:
         outdir = lambda wildcards, output: Path(output.gff).parent
     log:
@@ -41,8 +42,13 @@ rule abricate_filter:
     input:
         "results/analysis/abricate/{strain}/{strain}_all.csv"
     output:
-        args = "results/analysis/abricate/{strain}/{strain}_ARGs.csv",
+        report("results/analysis/abricate/{strain}/{strain}_ARGs.csv",
+            caption="../report/before_trim_multiqc.rst",
+            category="Analysis"),
+        #args = "results/analysis/abricate/{strain}/{strain}_ARGs.csv",
         filtout = "results/analysis/abricate/{strain}/{strain}_filtoutARGs.csv"
+    params:
+        args = "results/analysis/abricate/{strain}/{strain}_ARGs.csv"
     log:
         "logs/abricate/{strain}_filter.log"
     conda:
@@ -53,15 +59,17 @@ rule abricate_filter:
 ## visualize the annotated genome
 rule gview:
     input:
-        gff = "results/analysis/prokka/{strain}/{strain}.gff",
+        #gff = "results/analysis/prokka/{strain}/{strain}.gff",
         gbk = "results/analysis/prokka/{strain}/{strain}.gbk"
     output:
-        "results/reports/assembly/{strain}_gview.png"
+        report("results/reports/assembly/{strain}/{strain}_gview.png",
+            caption="../report/gview.rst",
+            category="Assembly visualization")
     params:
         extra = "-l circular",
-        jar_file = "resources/gview/gview.jar",
+        jar_file = config["gview_file"], #"resources/gview/gview.jar",
         ## style sheet
-        gss = "resources/gview/example_styles/gssExample.gss"
+        gss = config["gview_style_sheet"] #"resources/gview/example_styles/gssExample.gss"
         ## we need a style sheet to make this look cool! (see basic and gss examples)
         #style_sheet = 
     log:
@@ -69,6 +77,13 @@ rule gview:
     conda:
         "../envs/gview.yaml" # env with java
     shell:
-        "java -jar {params.jar_file} -i {input.gbk} -o {output} "
-        "-g {input.gff} -s {params.gss} {params.extra}"
-  
+        "java -jar {params.jar_file} -i {input.gbk} -o {output} " #-g {input.gff}
+        "-s {params.gss} {params.extra} 2> {log}"
+
+'''rule circos:
+    input:
+
+    output:
+    log:
+    conda:
+    shell:'''

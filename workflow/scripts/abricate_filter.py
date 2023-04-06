@@ -22,8 +22,8 @@ def filter_by(same_region, filter_reason, filtout_ind_lst, filtout_genes):
 config = snakemake.config
 strain = snakemake.wildcards.strain[0]
 all_path = snakemake.input[0]
-args_path = snakemake.output.args[0]
-filtout_args_path = snakemake.output.filtout[0]
+args_path = snakemake.params.args
+filtout_args_path = snakemake.output.filtout
 dbs = config['abricate_dbs']
 
 '''
